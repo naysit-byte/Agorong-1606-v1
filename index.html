@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#060a12" id="meta-theme">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ร้องขอความเป็นธรรม">
+<title>ระเบียบ อส. — การร้องขอความเป็นธรรมในคดีอาญา</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="./icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap">
+<style>
+/* ═══ CSS VARIABLES ═══ */
+:root,[data-theme="dark"]{
+  --bg:#060a12;--bg1:#0b1120;--bg2:#111827;--bg3:#1a2640;
+  --bd:#1e2d42;--bd2:#253650;
+  --tx:#dde4f0;--tx2:#8fa8c8;--tx3:#4a6080;
+  --accent:#b87333;--accent2:#9a6020;--accentbg:rgba(184,115,51,.13);
+  --blue:#3b82f6;--bluebg:rgba(59,130,246,.13);
+  --green:#2ecc71;--greenbg:rgba(46,204,113,.1);
+  --red:#e74c3c;--redbg:rgba(231,76,60,.1);
+  --card-bg:#0b1120;--card-brd:#1e2d42;
+  --shadow:0 1px 4px rgba(0,0,0,.35);
+  --hdr-bg:#0b1120;--hdr-brd:#1e2d42;
+  --tab-bg:#08101e;
+}
+[data-theme="light"]{
+  --bg:#f4f6fa;--bg1:#ffffff;--bg2:#f0f3f8;--bg3:#e6eaf2;
+  --bd:#d0d8e8;--bd2:#b8c4d8;
+  --tx:#1a2336;--tx2:#4a5c7a;--tx3:#8a9ab8;
+  --accent:#7a4010;--accent2:#5a2e08;--accentbg:rgba(122,64,16,.1);
+  --blue:#1d5dbf;--bluebg:rgba(29,93,191,.1);
+  --green:#1a7a44;--greenbg:rgba(26,122,68,.1);
+  --red:#c0392b;--redbg:rgba(192,57,43,.1);
+  --card-bg:#ffffff;--card-brd:#d8e0f0;
+  --shadow:0 1px 4px rgba(0,0,0,.08);
+  --hdr-bg:#ffffff;--hdr-brd:#d0d8e8;
+  --tab-bg:#e8edf5;
+}
+
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--tx);
+  font-family:'Sarabun','Noto Sans Thai',sans-serif;font-size:14px;transition:background .2s,color .2s}
+
+/* ═══ LAYOUT ═══ */
+#app{
+  height:100dvh;
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+}
+
+/* ═══ HEADER ═══ */
+#hdr{
+  background:var(--hdr-bg);
+  border-bottom:1px solid var(--hdr-brd);
+  padding:env(safe-area-inset-top) 0 0 0;
+  flex-shrink:0;
+  z-index:30;
+}
+.hdr-top{
+  display:flex;align-items:center;gap:8px;
+  padding:10px 14px;
+}
+.hdr-title{
+  flex:1;min-width:0;
+}
+.hdr-title h1{
+  font-size:13px;font-weight:700;color:var(--accent);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  letter-spacing:.02em;
+}
+.hdr-title p{
+  font-size:11px;color:var(--tx2);margin-top:1px;
+}
+.hdr-actions{display:flex;gap:6px;flex-shrink:0;}
+.icon-btn{
+  width:34px;height:34px;border-radius:8px;border:none;cursor:pointer;
+  background:var(--bg2);color:var(--tx2);font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .15s,color .15s;
+}
+.icon-btn:hover{background:var(--bg3);color:var(--tx);}
+
+/* ═══ SEARCH BAR ═══ */
+.search-wrap{
+  padding:0 14px 10px;
+}
+.search-box{
+  display:flex;align-items:center;gap:8px;
+  background:var(--bg2);border:1px solid var(--bd);border-radius:10px;
+  padding:7px 12px;
+}
+.search-box input{
+  flex:1;background:none;border:none;outline:none;
+  color:var(--tx);font-family:inherit;font-size:13px;
+}
+.search-box input::placeholder{color:var(--tx3);}
+.search-box .search-ico{color:var(--tx3);font-size:14px;flex-shrink:0;}
+#search-clear{
+  background:none;border:none;color:var(--tx3);cursor:pointer;
+  font-size:12px;padding:2px;display:none;
+}
+
+/* ═══ TAB BAR ═══ */
+#tabbar{
+  background:var(--tab-bg);
+  border-bottom:1px solid var(--bd);
+  display:flex;
+  overflow-x:auto;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none;
+  flex-shrink:0;
+}
+#tabbar::-webkit-scrollbar{display:none;}
+.tab-btn{
+  flex-shrink:0;
+  padding:9px 16px;
+  font-size:12px;font-weight:600;
+  color:var(--tx2);
+  background:none;border:none;cursor:pointer;
+  border-bottom:2px solid transparent;
+  white-space:nowrap;
+  font-family:inherit;
+  transition:color .15s,border-color .15s;
+}
+.tab-btn.active{
+  color:var(--accent);
+  border-bottom-color:var(--accent);
+}
+
+/* ═══ MAIN CONTENT ═══ */
+#main{
+  flex:1;overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+  padding:10px 12px;
+  padding-bottom:calc(env(safe-area-inset-bottom) + 70px);
+}
+
+/* ═══ RESULT COUNT ═══ */
+#result-count{
+  font-size:11px;color:var(--tx3);
+  padding:2px 2px 8px;
+}
+
+/* ═══ CARDS ═══ */
+.section-card{
+  background:var(--card-bg);
+  border:1px solid var(--card-brd);
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:border-color .15s,background .15s;
+}
+.section-card:hover{border-color:var(--accent);background:var(--accentbg);}
+.card-top{display:flex;align-items:flex-start;gap:10px;}
+.card-num{
+  flex-shrink:0;
+  background:var(--accentbg);
+  color:var(--accent);
+  border-radius:7px;
+  padding:3px 9px;
+  font-size:11px;font-weight:700;
+  letter-spacing:.03em;
+  margin-top:1px;
+}
+.card-section-label{
+  font-size:11px;color:var(--tx3);margin-bottom:3px;font-weight:500;
+}
+.card-body{flex:1;min-width:0;}
+.card-title{font-size:13px;font-weight:600;color:var(--tx);line-height:1.45;}
+.card-cat{
+  font-size:11px;color:var(--tx3);margin-top:5px;
+}
+.card-preview{
+  font-size:12px;color:var(--tx2);margin-top:6px;
+  line-height:1.6;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+.has-note .card-num::after{content:'📝';margin-left:4px;font-size:9px;}
+.has-edit .card-title::after{
+  content:' แก้ไข';
+  font-size:10px;color:var(--blue);font-weight:500;
+  background:var(--bluebg);
+  border-radius:4px;padding:1px 5px;margin-left:6px;
+  vertical-align:middle;
+}
+
+mark{background:rgba(184,115,51,.3);color:var(--tx);border-radius:3px;padding:0 1px;}
+
+/* ═══ EMPTY STATE ═══ */
+.empty{text-align:center;padding:48px 20px;color:var(--tx3);}
+.empty .ico{font-size:40px;margin-bottom:12px;}
+.empty p{font-size:14px;}
+
+/* ═══ BOTTOM SHEET ═══ */
+#sheet-overlay{
+  position:fixed;inset:0;z-index:50;
+  background:rgba(0,0,0,.55);
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+}
+#sheet-overlay.open{opacity:1;pointer-events:all;}
+#sheet{
+  position:fixed;left:0;right:0;bottom:0;z-index:51;
+  background:var(--bg1);
+  border-radius:20px 20px 0 0;
+  max-height:90dvh;
+  display:flex;flex-direction:column;
+  transform:translateY(100%);
+  transition:transform .3s cubic-bezier(.4,0,.2,1);
+  padding-bottom:env(safe-area-inset-bottom);
+}
+#sheet.open{transform:translateY(0);}
+.sheet-handle{
+  width:36px;height:4px;border-radius:2px;
+  background:var(--bd2);margin:10px auto 0;flex-shrink:0;
+}
+.sheet-hdr{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 16px 10px;border-bottom:1px solid var(--bd);flex-shrink:0;
+}
+.sheet-num{
+  background:var(--accentbg);color:var(--accent);
+  border-radius:8px;padding:4px 12px;
+  font-size:12px;font-weight:700;flex-shrink:0;
+}
+.sheet-title{flex:1;font-size:14px;font-weight:600;color:var(--tx);min-width:0;}
+.sheet-close{
+  width:30px;height:30px;border-radius:8px;
+  background:var(--bg2);border:none;cursor:pointer;
+  color:var(--tx2);font-size:18px;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.sheet-tabs{
+  display:flex;border-bottom:1px solid var(--bd);flex-shrink:0;
+  background:var(--bg1);
+}
+.sh-tab{
+  flex:1;padding:9px 4px;font-size:12px;font-weight:600;
+  color:var(--tx2);background:none;border:none;cursor:pointer;
+  border-bottom:2px solid transparent;font-family:inherit;
+  transition:color .15s;
+}
+.sh-tab.active{color:var(--accent);border-bottom-color:var(--accent);}
+.sheet-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px;}
+
+/* Article text formatting */
+.art-block{margin-bottom:1em;}
+.art-block p.intro{
+  font-size:14px;line-height:1.9;color:var(--tx);
+  text-indent:0;
+}
+.art-block p.sub{
+  font-size:14px;line-height:1.9;color:var(--tx);
+  padding-left:1.8em;text-indent:-1.8em;
+  margin-top:.2em;
+}
+
+/* Preamble / notes */
+.preamble-text{
+  font-size:13px;line-height:1.9;color:var(--tx2);
+  font-style:italic;margin-bottom:12px;
+}
+
+/* Note editor */
+#note-area{
+  width:100%;min-height:100px;
+  background:var(--bg2);border:1px solid var(--bd);border-radius:10px;
+  color:var(--tx);font-family:inherit;font-size:13px;
+  padding:10px;resize:vertical;outline:none;
+  line-height:1.7;
+}
+.note-actions{margin-top:8px;display:flex;gap:8px;}
+.btn{
+  padding:8px 16px;border-radius:8px;border:none;cursor:pointer;
+  font-size:13px;font-family:inherit;font-weight:600;
+  transition:opacity .15s;
+}
+.btn:hover{opacity:.85;}
+.btn-accent{background:var(--accent);color:#fff;}
+.btn-ghost{background:var(--bg2);color:var(--tx2);}
+.btn-danger{background:var(--redbg);color:var(--red);}
+
+/* Edit area */
+#edit-area{
+  width:100%;min-height:200px;
+  background:var(--bg2);border:1px solid var(--bd);border-radius:10px;
+  color:var(--tx);font-family:inherit;font-size:13px;
+  padding:10px;resize:vertical;outline:none;
+  line-height:1.7;
+}
+
+/* ═══ FAB ═══ */
+#fab{
+  position:fixed;right:16px;bottom:calc(env(safe-area-inset-bottom) + 16px);
+  width:44px;height:44px;border-radius:50%;
+  background:var(--accent);color:#fff;
+  border:none;cursor:pointer;font-size:20px;
+  box-shadow:0 4px 16px rgba(0,0,0,.3);
+  display:none;align-items:center;justify-content:center;
+  z-index:40;transition:opacity .2s;
+}
+#fab.vis{display:flex;}
+
+/* ═══ INSTALL BANNER ═══ */
+#install-banner{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--bg1);border-top:1px solid var(--bd);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  display:none;align-items:center;gap:10px;z-index:45;
+}
+#install-banner.show{display:flex;}
+#install-banner p{flex:1;font-size:13px;color:var(--tx);}
+.btn-install{padding:8px 14px;border-radius:8px;border:none;cursor:pointer;
+  background:var(--accent);color:#fff;font-size:13px;font-weight:600;font-family:inherit;}
+.btn-dismiss{background:none;border:none;color:var(--tx3);cursor:pointer;font-size:20px;}
+
+/* ═══ SECTION DIVIDER ═══ */
+.sect-divider{
+  font-size:11px;font-weight:700;color:var(--tx3);
+  letter-spacing:.08em;text-transform:uppercase;
+  padding:14px 2px 6px;
+  border-bottom:1px solid var(--bd);
+  margin-bottom:8px;
+}
+
+/* ═══ INFO BOX ═══ */
+.info-box{
+  background:var(--accentbg);border:1px solid var(--accent);border-radius:10px;
+  padding:12px 14px;margin-bottom:12px;
+  font-size:12px;color:var(--tx2);line-height:1.7;
+}
+.info-box strong{color:var(--accent);}
+
+/* ═══ COPY TOAST ═══ */
+#toast{
+  position:fixed;bottom:calc(env(safe-area-inset-bottom) + 80px);
+  left:50%;transform:translateX(-50%) translateY(10px);
+  background:#1a2640;color:#dde4f0;
+  border-radius:20px;padding:8px 20px;
+  font-size:13px;font-weight:500;
+  opacity:0;transition:opacity .2s,transform .2s;
+  pointer-events:none;z-index:99;white-space:nowrap;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+</style>
+</head>
+<body>
+<div id="app">
+  <!-- HEADER -->
+  <div id="hdr">
+    <div class="hdr-top">
+      <div class="hdr-title">
+        <h1>ระเบียบ อส. การร้องขอความเป็นธรรม</h1>
+        <p>พ.ศ. ๒๕๖๗ — สำนักงานอัยการสูงสุด</p>
+      </div>
+      <div class="hdr-actions">
+        <button class="icon-btn" id="export-btn" title="สำรองข้อมูล">💾</button>
+        <button class="icon-btn" id="theme-btn" title="เปลี่ยนธีม">🌙</button>
+      </div>
+    </div>
+    <div class="search-wrap">
+      <div class="search-box">
+        <span class="search-ico">🔍</span>
+        <input type="search" id="search-inp" placeholder="ค้นหาข้อ หรือ เนื้อหา…" autocomplete="off">
+        <button id="search-clear">✕</button>
+      </div>
+    </div>
+    <!-- TAB BAR -->
+    <div id="tabbar">
+      <button class="tab-btn active" data-cat="all">ทั้งหมด</button>
+      <button class="tab-btn" data-cat="หมวด ๑">หมวด ๑ — บทฃทั่วไป</button>
+      <button class="tab-btn" data-cat="หมวด ๒">หมวด ๒ — การพิจารณา</button>
+      <button class="tab-btn" data-cat="บทเฉพาะกาล">บทเฉพาะกาล</button>
+      <button class="tab-btn" data-cat="ประกาศ">ประกาศและแบบ</button>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div id="main">
+    <div id="result-count"></div>
+    <div id="cards-wrap"></div>
+  </div>
+</div>
+
+<!-- BOTTOM SHEET -->
+<div id="sheet-overlay"></div>
+<div id="sheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-hdr">
+    <div class="sheet-num" id="sh-num"></div>
+    <div class="sheet-title" id="sh-title"></div>
+    <button class="sheet-close" id="sheet-close">×</button>
+  </div>
+  <div class="sheet-tabs">
+    <button class="sh-tab active" data-tab="view">📖 อ่าน</button>
+    <button class="sh-tab" data-tab="note">📝 โน้ต</button>
+    <button class="sh-tab" data-tab="edit">✏️ แก้ไข</button>
+    <button class="sh-tab" data-tab="copy">📋 คัดลอก</button>
+  </div>
+  <div class="sheet-body" id="sheet-body"></div>
+</div>
+
+<div id="toast"></div>
+<button id="fab">↑</button>
+
+<!-- INSTALL BANNER -->
+<div id="install-banner">
+  <p>📲 ติดตั้งแอปไว้ใช้แบบออฟไลน์ได้</p>
+  <button class="btn-install" id="install-btn">ติดตั้ง</button>
+  <button class="btn-dismiss" id="dismiss-btn">✕</button>
+</div>
+
+<!-- IMPORT INPUT -->
+<input type="file" id="import-file" accept=".json" style="display:none">
+
+<script>
+// ═══════════════════════════════════════════════════
+// DATA — ระเบียบสำนักงานอัยการสูงสุดว่าด้วยการร้องขอความเป็นธรรมในคดีอาญา พ.ศ. ๒๕๖๗
+// ═══════════════════════════════════════════════════
+const D = [
+  // ─── คำปรารภและนิยาม ───
+  {
+    num: 0,
+    id: 'preamble',
+    cat: 'หมวด ๑',
+    label: 'คำปรารภ',
+    title: 'คำปรารภและบทนิยาม',
+    text: [
+      { type:'intro', t:'โดยที่เป็นการสมควรมีระเบียบสำนักงานอัยการสูงสุดว่าด้วยการร้องขอความเป็นธรรมในคดีอาญา เพื่อให้แนวทางปฏิบัติในการร้องขอความเป็นธรรมในคดีอาญามีประสิทธิภาพ เหมาะสมทันต่อสถานการณ์ของสังคมและกฎหมายที่เปลี่ยนแปลงไป' },
+      { type:'intro', t:'อาศัยอำนาจตามความในมาตรา ๑๙ วรรคหนึ่ง แห่งพระราชบัญญัติองค์กรอัยการและพนักงานอัยการ พ.ศ. ๒๕๕๓ ประกอบ ข้อ ๕ ของระเบียบสำนักงานอัยการสูงสุดว่าด้วยตำแหน่งและอำนาจของพนักงานอัยการในการดำเนินคดีอาญาตามพระราชบัญญัติองค์กรอัยการและพนักงานอัยการ พ.ศ. ๒๕๕๓ มาตรา ๑๔ วรรคหนึ่ง (๒) พ.ศ. ๒๕๖๐ อัยการสูงสุดจึงวางระเบียบ ดังต่อไปนี้' },
+    ]
+  },
+  // ─── ข้อ ๑–๖ ───
+  {
+    num: 1,
+    id: 'art1',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๑',
+    title: 'ชื่อระเบียบ',
+    text: [
+      { type:'intro', t:'ระเบียบนี้เรียกว่า "ระเบียบสำนักงานอัยการสูงสุดว่าด้วยการร้องขอความเป็นธรรมในคดีอาญา พ.ศ. ๒๕๖๗"' }
+    ]
+  },
+  {
+    num: 2,
+    id: 'art2',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๒',
+    title: 'วันบังคับใช้',
+    text: [
+      { type:'intro', t:'ระเบียบนี้ให้ใช้บังคับตั้งแต่วันถัดจากวันประกาศเป็นต้นไป' }
+    ]
+  },
+  {
+    num: 3,
+    id: 'art3',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๓',
+    title: 'บทนิยาม',
+    text: [
+      { type:'intro', t:'"การร้องขอความเป็นธรรม" หมายความว่า การขอให้พนักงานอัยการผู้มีอำนาจหน้าที่ในการดำเนินคดีดำเนินการอย่างใดอย่างหนึ่งที่อยู่ในอำนาจหน้าที่ของตนเองเพื่อให้เกิดความเป็นธรรมในการสั่งคดีอาญา โดยกล่าวอ้างว่าไม่ได้รับความเป็นธรรมในกระบวนการยุติธรรม' },
+      { type:'intro', t:'"ผู้ร้อง" หมายความว่า ผู้ยื่นร้องขอความเป็นธรรมตามระเบียบนี้' },
+      { type:'intro', t:'"อธิบดีอัยการ" หมายความว่า อธิบดีอัยการหรืออธิบดีอัยการภาคที่รับผิดชอบในการดำเนินคดี' },
+      { type:'intro', t:'"หัวหน้าพนักงานอัยการ" หมายความว่า อัยการพิเศษฝ่ายที่รับผิดชอบในการดำเนินคดีประจำศาลชั้นต้นหรืออัยการจังหวัดที่รับผิดชอบในการดำเนินคดี' },
+      { type:'intro', t:'"พนักงานอัยการ" หมายความว่า พนักงานอัยการซึ่งได้รับมอบหมายให้พิจารณาสำนวนคดี' },
+      { type:'intro', t:'"สำนักงานคดีอาญา" หมายความว่า สำนักงานคดีที่มีอำนาจและหน้าที่ในการดำเนินคดีอาญา' },
+      { type:'intro', t:'"สำนักงานอัยการจังหวัด" หมายความว่า สำนักงานอัยการจังหวัด สำนักงานอัยการคดีศาลแขวง และสำนักงานอัยการคดีเยาวชนและครอบครัวจังหวัด' },
+      { type:'intro', t:'"การดำเนินคดี" หมายความว่า การดำเนินการเกี่ยวกับคดีอาญาของพนักงานอัยการ' },
+      { type:'intro', t:'"หน่วยงานของรัฐ" หมายความว่า องค์กรตามรัฐธรรมนูญ ราชการส่วนกลาง ราชการส่วนภูมิภาค ราชการส่วนท้องถิ่น รัฐวิสาหกิจ องค์การมหาชน หน่วยงานอื่นของรัฐ หรือหน่วยงานอื่นใดที่ดำเนินกิจการของรัฐ' },
+    ]
+  },
+  {
+    num: 4,
+    id: 'art4',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๔',
+    title: 'ผู้มีอำนาจตีความ',
+    text: [
+      { type:'intro', t:'อัยการสูงสุดเป็นผู้มีอำนาจตีความและวินิจฉัยปัญหาเกี่ยวกับการปฏิบัติตามระเบียบนี้' }
+    ]
+  },
+  {
+    num: 5,
+    id: 'art5',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๕',
+    title: 'อำนาจออกประกาศและคำสั่ง',
+    text: [
+      { type:'intro', t:'อัยการสูงสุดมีอำนาจออกประกาศ คำสั่ง หลักเกณฑ์และวิธีการ หนังสือสั่งการ หรือแนวทางปฏิบัติอื่นใดเพื่อประโยชน์ในการปฏิบัติตามระเบียบนี้' },
+      { type:'intro', t:'บรรดาระเบียบ ข้อบังคับ ประกาศ และคำสั่ง ซึ่งขัดหรือแย้งกับระเบียบนี้ให้ใช้ระเบียบนี้แทน' }
+    ]
+  },
+  {
+    num: 6,
+    id: 'art6',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๖',
+    title: 'กรณีที่ไม่ได้กำหนดไว้',
+    text: [
+      { type:'intro', t:'การใดที่ไม่ได้กำหนดไว้ในระเบียบนี้ ให้นำระเบียบสำนักงานอัยการสูงสุดว่าด้วยการดำเนินคดีอาญาของพนักงานอัยการ มาใช้บังคับโดยอนุโลมเท่าที่ไม่ขัดหรือแย้งกับระเบียบนี้' }
+    ]
+  },
+  // ─── หมวด ๑ บทฃทั่วไป (ข้อ ๗–๑๑) ───
+  {
+    num: 7,
+    id: 'art7',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๗',
+    title: 'บุคคลผู้มีสิทธิร้องขอความเป็นธรรม',
+    text: [
+      { type:'intro', t:'บุคคลเหล่านี้มีสิทธิร้องขอความเป็นธรรม' },
+      { type:'sub', t:'(๑) ผู้เสียหายตามประมวลกฎหมายวิธีพิจารณาความอาญา ตลอดจนผู้แทนโดยชอบธรรม หรือผู้อนุบาล ในความผิดซึ่งได้กระทำต่อผู้เยาว์หรือผู้ไร้ความสามารถซึ่งอยู่ในความดูแล' },
+      { type:'sub', t:'(๒) ผู้บุพการี ผู้สืบสันดาน คู่สมรส หรือผู้ซึ่งอยู่กินฉันสามีภริยาโดยมิได้จดทะเบียนสมรส ในความผิดซึ่งได้เสียหายถูกทำร้ายถึงตายหรือถึงขนาดไม่สามารถจัดการเองได้' },
+      { type:'sub', t:'(๓) ผู้ต้องหาตามประมวลกฎหมายวิธีพิจารณาความอาญา' },
+      { type:'sub', t:'(๔) ผู้บุพการี ผู้สืบสันดาน คู่สมรส หรือผู้ซึ่งอยู่กินฉันสามีภริยาโดยมิได้จดทะเบียนสมรส ของผู้ต้องหา ในกรณีที่ผู้ต้องหาป่วยจนไม่สามารถจัดการเองได้' },
+    ]
+  },
+  {
+    num: 8,
+    id: 'art8',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๘',
+    title: 'วิธียื่นหนังสือร้องขอความเป็นธรรม',
+    text: [
+      { type:'intro', t:'การร้องขอความเป็นธรรม ให้ทำเป็นหนังสือถึงหัวหน้าพนักงานอัยการที่รับผิดชอบในการดำเนินคดีดังกล่าวเท่านั้น' },
+      { type:'intro', t:'ผู้ร้องตามข้อ ๗ (๓) ต้องแสดงตนตามหลักเกณฑ์และวิธีการที่สำนักงานอัยการสูงสุดกำหนด ในขณะยื่นหนังสือร้องขอความเป็นธรรม เว้นแต่ผู้ร้องถูกคุมตัวหรือขังอยู่ตามประมวลกฎหมายวิธีพิจารณาความอาญา' }
+    ]
+  },
+  {
+    num: 9,
+    id: 'art9',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๙',
+    title: 'รายการในหนังสือร้องขอความเป็นธรรม',
+    text: [
+      { type:'intro', t:'หนังสือร้องขอความเป็นธรรมอย่างน้อยต้องมีรายละเอียด ดังต่อไปนี้' },
+      { type:'sub', t:'(๑) ชื่อตัว ชื่อสกุล อายุ ที่อยู่ หมายเลขโทรศัพท์ หรือไปรษณีย์อิเล็กทรอนิกส์ของผู้ร้อง' },
+      { type:'sub', t:'(๒) ความเกี่ยวพันของผู้ร้องในคดีหรือเรื่องที่ร้องขอความเป็นธรรม' },
+      { type:'sub', t:'(๓) รายละเอียดของคดีหรือเรื่องที่ร้องขอความเป็นธรรม' },
+      { type:'sub', t:'(๔) ข้อเท็จจริงและพยานหลักฐานหรือข้อกฎหมาย (ถ้ามี) ที่แสดงให้เห็นว่าผู้ร้องไม่ได้รับความเป็นธรรม' },
+      { type:'sub', t:'(๕) ประเด็นหรือความประสงค์ในการร้องขอความเป็นธรรม' },
+      { type:'sub', t:'(๖) เรื่องที่ร้องขอความเป็นธรรมได้มีการยื่นหนังสือไปยังหน่วยราชการภายในสำนักงานอัยการสูงสุดหรือหน่วยงานของรัฐหรือไม่ พร้อมรายละเอียด' },
+    ]
+  },
+  {
+    num: 10,
+    id: 'art10',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๑๐',
+    title: 'การบันทึกในสารบบคดี',
+    text: [
+      { type:'intro', t:'เมื่อได้รับหนังสือร้องขอความเป็นธรรมให้สำนักงานคดีอาญาหรือสำนักงานอัยการจังหวัดลงรับเรื่องร้องขอความเป็นธรรมของสำนักงานนั้น ๆ ในสารบบคดีอิเล็กทรอนิกส์คู่กับสำนวนคดีอาญาหลัก เพื่อจัดเก็บเป็นสถิติตามที่สำนักงานอัยการสูงสุดกำหนด' }
+    ]
+  },
+  {
+    num: 11,
+    id: 'art11',
+    cat: 'หมวด ๑',
+    label: 'ข้อ ๑๑',
+    title: 'อำนาจพิจารณาตามสำนักงาน',
+    text: [
+      { type:'intro', t:'การร้องขอความเป็นธรรมที่อยู่ในอำนาจพิจารณาของสำนักงานดังต่อไปนี้ ให้ดำเนินการตามระเบียบ คำสั่ง หรือแนวทางปฏิบัติว่าด้วยการนั้นเท่านั้นที่ไม่ขัดหรือแย้งกับระเบียบนี้' },
+      { type:'sub', t:'(๑) สำนักงานคดีค้ามนุษย์ เฉพาะคดีความผิดเกี่ยวกับการค้ามนุษย์ที่มีโทษตามกฎหมายไทย ซึ่งได้กระทำลงนอกราชอาณาจักรตามประมวลกฎหมายวิธีพิจารณาความอาญาและเกี่ยวพันกับความผิดตามกฎหมายว่าด้วยการป้องกันและปราบปรามการมีส่วนร่วมในองค์กรอาชญากรรมข้ามชาติ ที่กำหนดให้เป็นอำนาจและหน้าที่ของอัยการสูงสุด' },
+      { type:'sub', t:'(๒) สำนักงานชี้ขาดคดีอัยการสูงสุด' },
+      { type:'sub', t:'(๓) สำนักงานคดีอัยการสูงสุด' },
+      { type:'sub', t:'(๔) สำนักงานคดีกิจการอัยการสูงสุด' },
+      { type:'sub', t:'(๕) สำนักงานคดีปราบปรามทุจริต และสำนักงานคดีปราบปรามการทุจริตภาค' },
+    ]
+  },
+  // ─── หมวด ๒ การพิจารณาคำร้อง (ข้อ ๑๒–๑๗) ───
+  {
+    num: 12,
+    id: 'art12',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๒',
+    title: 'การพิจารณารับคำร้อง',
+    text: [
+      { type:'intro', t:'เมื่อมีผู้ร้องยื่นหนังสือร้องขอความเป็นธรรมตามข้อ ๘ ให้พนักงานอัยการพิจารณารับคำร้องขอความเป็นธรรมดังกล่าวไว้พิจารณา' },
+      { type:'intro', t:'กรณีดังต่อไปนี้ พนักงานอัยการอาจไม่รับไว้พิจารณาก็ได้' },
+      { type:'sub', t:'(๑) ประเด็นในการร้องขอความเป็นธรรมนั้นเป็นประเด็นที่เคยมีการร้องขอความเป็นธรรมและพนักงานอัยการได้เคยพิจารณาไว้แล้ว ทั้งนี้ ไม่ว่าจะเป็นผู้ร้องคนเดียวกันหรือไม่' },
+      { type:'sub', t:'(๒) การร้องขอความเป็นธรรมนั้นมีลักษณะเป็นการประวิงคดีให้ล่าช้า' },
+      { type:'sub', t:'(๓) ประเด็นในการร้องขอความเป็นธรรมนั้นเป็นประเด็นที่พนักงานสอบสวนได้ทำการสอบสวนไว้แล้วในสำนวนการสอบสวน' },
+      { type:'sub', t:'(๔) หนังสือร้องขอความเป็นธรรมมีรายละเอียดอันเป็นสาระสำคัญตามข้อ ๙ (๑) (๒) (๓) (๔) และ (๕) ไม่เพียงพอในการพิจารณา' },
+      { type:'sub', t:'(๕) วัตถุประสงค์ในการร้องขอความเป็นธรรมไม่อยู่ในอำนาจหน้าที่ของพนักงานอัยการ' },
+      { type:'sub', t:'(๖) เป็นคดีที่ผู้ต้องหาร้องขอความเป็นธรรมโดยยังไม่เข้ารับทราบข้อกล่าวหาหรือพนักงานสอบสวนยังไม่ได้ตัวผู้ต้องหาเพื่อส่งตัวมาพบพนักงานอัยการตามวันนัด' },
+      { type:'sub', t:'(๗) เป็นคดีที่อยู่ระหว่างการพิจารณาของศาล และไม่มีเหตุจำเป็นอันควรรับไว้พิจารณา' },
+      { type:'intro', t:'กรณีตามวรรคสอง ให้ทำบันทึกข้อความเสนอความเห็นพร้อมเรื่องร้องขอความเป็นธรรมและสำเนารายงานการสอบสวน เสนอตามลำดับชั้นถึงอธิบดีอัยการพิจารณาสั่งยุติเรื่องร้องขอความเป็นธรรมนั้น ทั้งนี้ ให้ดำเนินการทุกขั้นตอนโดยเร็วเพื่อมิให้กระทบต่อการดำเนินคดี' },
+      { type:'intro', t:'การร้องขอความเป็นธรรมไม่เป็นเหตุให้พนักงานอัยการต้องขอขยายอายุความหรือยื่นฟ้องคดี' },
+    ]
+  },
+  {
+    num: 13,
+    id: 'art13',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๓',
+    title: 'กรณีผู้ร้องไม่แสดงตน',
+    text: [
+      { type:'intro', t:'กรณีที่ผู้ร้องตามข้อ ๗ (๓) ไม่มาแสดงตนตามข้อ ๘ วรรคสอง ให้พนักงานอัยการสั่งยุติเรื่องและเสนอหัวหน้าพนักงานอัยการเพื่อทราบ' }
+    ]
+  },
+  {
+    num: 14,
+    id: 'art14',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๔',
+    title: 'การพิจารณาความเป็นธรรม',
+    text: [
+      { type:'intro', t:'พนักงานอัยการพิงพิจารณาให้ความเป็นธรรมโดยให้คำนึงถึงข้อเท็จจริงและพยานหลักฐานอันสำคัญแก่คดีที่จะนำไปสู่การพิสูจน์ความผิดหรือความบริสุทธิ์ซึ่งผู้ต้องหาได้' }
+    ]
+  },
+  {
+    num: 15,
+    id: 'art15',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๕',
+    title: 'กรณีมีความเห็นและคำสั่งก่อนหน้า',
+    text: [
+      { type:'intro', t:'กรณีพนักงานอัยการได้มีความเห็นและคำสั่งทางคดีก่อนได้รับเรื่องการร้องขอความเป็นธรรม ถ้าพนักงานอัยการเห็นว่าการร้องขอความเป็นธรรมไม่เป็นเหตุให้ผลการพิจารณาสั่งคดีเปลี่ยนแปลงไป ให้พนักงานอัยการเสนอความเห็นยืนยันความเห็นและคำสั่งเดิม และเสนอหัวหน้าพนักงานอัยการเพื่อพิจารณา' }
+    ]
+  },
+  {
+    num: 16,
+    id: 'art16',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๖',
+    title: 'คดีที่มีการร้องขอความเป็นธรรม',
+    text: [
+      { type:'intro', t:'คดีที่มีการร้องขอความเป็นธรรม ในกรณีที่จะมีคำสั่งไม่ฟ้องทุกข้อหาหรือบางข้อหา ให้ทำความเห็นในสำนวนแล้วจัดส่งตามลำดับชั้นถึงอธิบดีอัยการเพื่อพิจารณาสั่งทั้งคดี เมื่ออธิบดีอัยการมีคำสั่งประการใดให้ปฏิบัติตามนั้น' },
+      { type:'intro', t:'กรณีที่มีคำสั่งฟ้องทุกข้อหา ให้ดำเนินการให้ได้ตัวผู้ต้องหามายื่นฟ้องต่อศาล และให้รับทำบันทึกข้อความส่งคำร้องขอความเป็นธรรม สำเนาความเห็นและคำสั่งพร้อมทั้งสำเนารายงานการสอบสวน เสนออธิบดีอัยการเพื่อทราบ' },
+      { type:'intro', t:'หากเป็นกรณีที่ต้องกลับความเห็นหรือกลับคำสั่งเดิม หรือต้องถอนฟ้อง ให้ดำเนินการตามระเบียบสำนักงานอัยการสูงสุดว่าด้วยการดำเนินคดีอาญาของพนักงานอัยการ' },
+    ]
+  },
+  {
+    num: 17,
+    id: 'art17',
+    cat: 'หมวด ๒',
+    label: 'ข้อ ๑๗',
+    title: 'คดีที่อยู่ระหว่างการพิจารณาของศาลชั้นต้น',
+    text: [
+      { type:'intro', t:'การร้องขอความเป็นธรรมในคดีที่อยู่ระหว่างการพิจารณาของศาลชั้นต้น ซึ่งไม่ใช่กรณีตามข้อ ๑๒ (๗) ให้พนักงานอัยการพิจารณาเสนอความเห็นต่อหัวหน้าพนักงานอัยการเพื่อพิจารณา' }
+    ]
+  },
+  // ─── บทเฉพาะกาล (ข้อ ๑๘) ───
+  {
+    num: 18,
+    id: 'art18',
+    cat: 'บทเฉพาะกาล',
+    label: 'ข้อ ๑๘',
+    title: 'บทเฉพาะกาล',
+    text: [
+      { type:'intro', t:'คดีที่มีการร้องขอความเป็นธรรมซึ่งอยู่ระหว่างการพิจารณาของพนักงานอัยการก่อนวันที่ระเบียบนี้ใช้บังคับ ให้ใช้บังคับตามระเบียบนี้เท่าที่พอจะใช้บังคับได้' },
+      { type:'intro', t:'กรณีตามข้อ ๑๑ หากยังมิได้มีระเบียบ คำสั่ง หรือแนวทางปฏิบัติ ให้ใช้ระเบียบนี้โดยอนุโลม' },
+    ]
+  },
+  // ─── ประกาศ — หลักเกณฑ์การแสดงตน ───
+  {
+    num: 101,
+    id: 'ann1',
+    cat: 'ประกาศ',
+    label: 'ประกาศ ๑',
+    title: 'หลักเกณฑ์และวิธีการแสดงตนของผู้ต้องหา',
+    text: [
+      { type:'intro', t:'ประกาศสำนักงานอัยการสูงสุด เรื่อง หลักเกณฑ์และวิธีการแสดงตนของผู้ต้องหาในการยื่นหนังสือร้องขอความเป็นธรรม' },
+      { type:'intro', t:'อาศัยอำนาจตามความในข้อ ๘ วรรคสอง ประกอบข้อ ๗ (๓) ของระเบียบสำนักงานอัยการสูงสุดว่าด้วยการร้องขอความเป็นธรรมในคดีอาญา พ.ศ. ๒๕๖๗ อัยการสูงสุดจึงกำหนดหลักเกณฑ์และวิธีการแสดงตนของผู้ต้องหาในการยื่นหนังสือร้องขอความเป็นธรรม รายละเอียดปรากฏตามเอกสารแนบท้ายประกาศนี้' },
+      { type:'intro', t:'ทั้งนี้ ตั้งแต่วันที่ ๑๓ กันยายน พ.ศ. ๒๕๖๗ เป็นต้นไป' },
+      { type:'intro', t:'ประกาศ ณ วันที่ ๑๒ กันยายน พ.ศ. ๒๕๖๗' },
+      { type:'intro', t:'(นายอำนาจ เจตน์เจริญรักษ์) อัยการสูงสุด' },
+    ]
+  },
+  {
+    num: 102,
+    id: 'ann2',
+    cat: 'ประกาศ',
+    label: 'ประกาศ ๒',
+    title: 'รายละเอียดหลักเกณฑ์การแสดงตน',
+    text: [
+      { type:'intro', t:'หลักเกณฑ์และวิธีการแสดงตนของผู้ต้องหาในการยื่นหนังสือร้องขอความเป็นธรรม' },
+      { type:'intro', t:'๑. ผู้ต้องหาซึ่งยื่นหนังสือร้องขอความเป็นธรรม ต้องแจ้งต่อเจ้าหน้าที่ของสำนักงานคดีอาญาหรือสำนักงานอัยการจังหวัด พร้อมแสดงหลักฐานทางราชการหรือหน่วยงานของรัฐออกให้ที่ปรากฏข้อมูลรูปถ่าย ชื่อ สกุล เลขประจำตัวประชาชนของผู้ต้องหา เพื่อยืนยันว่าเป็นผู้ต้องหาในคดีที่ประสงค์จะร้องขอความเป็นธรรมจริง' },
+      { type:'intro', t:'๒. ให้เจ้าหน้าที่ที่ได้รับมอบหมาย ตรวจเปรียบเทียบหลักฐานที่ผู้ต้องหายื่นกับใบหน้าผู้ต้องหา เพื่อยืนยันว่าเป็นผู้ต้องหาในคดีที่ร้องขอความเป็นธรรมจริง และจัดทำรายงานตามแบบแนบท้ายหลักเกณฑ์นี้' },
+      { type:'intro', t:'ในการตรวจเปรียบเทียบหลักฐานของผู้ต้องหา สำนักงานคดีอาญาหรือสำนักงานอัยการจังหวัด อาจใช้ข้อมูลในระบบ DXC (Data Exchange Center) ของสำนักงานกิจการยุติธรรม หรือระบบโปรแกรมเชื่อมโยงข้อมูลทะเบียนราษฎร ผ่านระบบบูรณาการฐานข้อมูลประชาชนและการบริการภาครัฐ (Linkage Center) ของกรมการปกครอง กระทรวงมหาดไทย เพื่อประกอบการตรวจสอบด้วยก็ได้' },
+      { type:'intro', t:'๓. ให้สำนักงานคดีอาญาหรือสำนักงานอัยการจังหวัดดำเนินการให้เป็นไปตามระเบียบสำนักงานอัยการสูงสุดว่าด้วยการร้องขอความเป็นธรรมในคดีอาญา พ.ศ. ๒๕๖๗' },
+    ]
+  },
+  {
+    num: 103,
+    id: 'ann3',
+    cat: 'ประกาศ',
+    label: 'แบบแนบ ๑',
+    title: 'แบบแสดงตนในการยื่นหนังสือร้องขอความเป็นธรรม',
+    text: [
+      { type:'intro', t:'แบบแสดงตนในการยื่นหนังสือร้องขอความเป็นธรรม (สำหรับผู้ต้องหา)' },
+      { type:'intro', t:'เรียน หัวหน้าพนักงานอัยการ' },
+      { type:'intro', t:'(๑) ข้อมูลผู้ร้อง: ชื่อ-สกุล / อายุ / เลขบัตรประจำตัวประชาชน / ผู้ต้องหาในสำนวนคดีอาญาที่ / ของสถานีตำรวจ / มีความประสงค์ยื่นหนังสือร้องขอความเป็นธรรมเป็นเอกสารจำนวน …… แผ่น' },
+      { type:'intro', t:'(๒) หลักฐานที่ใช้ในการแสดงตน: (รายการหลักฐาน ๑–๔)' },
+      { type:'intro', t:'(ลงชื่อ) ………………………………… ผู้ร้อง' },
+      { type:'intro', t:'(๓) ความเห็นเจ้าหน้าที่: ตรวจสอบหลักฐานแสดงตนของผู้ร้องเทียบกับใบหน้าของบุคคลซึ่งมาอยู่ต่อหน้า — □ เป็นผู้ต้องหาในคดี / □ ไม่ใช่ผู้ต้องหาในคดี' },
+      { type:'intro', t:'(ลงชื่อ) ………………………………… เจ้าหน้าที่  /  (ลงชื่อ) ………………………………… พนักงานอัยการ' },
+    ]
+  },
+];
+
+// ═══════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════
+const LS = 'reg_fairness_2567';
+let notes = JSON.parse(localStorage.getItem(LS+'_notes')||'{}');
+let edits = JSON.parse(localStorage.getItem(LS+'_edits')||'{}');
+let curItem = null;
+let curTab = 'view';
+let activeCat = 'all';
+let searchQ = '';
+
+// ═══════════════════════════════════════════════════
+// RENDER
+// ═══════════════════════════════════════════════════
+function hl(t, q){
+  if(!q) return t;
+  const re = new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi');
+  return t.replace(re,'<mark>$1</mark>');
+}
+
+function renderText(blocks, q){
+  return blocks.map(b => {
+    const t = hl(b.t, q);
+    return `<div class="art-block"><p class="${b.type}">${t}</p></div>`;
+  }).join('');
+}
+
+function renderCards(){
+  const wrap = document.getElementById('cards-wrap');
+  const rc = document.getElementById('result-count');
+  const q = searchQ.toLowerCase().trim();
+
+  // filter
+  let items = D.filter(d => {
+    if(activeCat !== 'all' && d.cat !== activeCat) return false;
+    if(!q) return true;
+    const txt = d.label + d.title + d.text.map(b=>b.t).join(' ');
+    return txt.toLowerCase().includes(q);
+  });
+
+  rc.textContent = q ? `พบ ${items.length} รายการ` : `ทั้งหมด ${items.length} รายการ`;
+
+  if(!items.length){
+    wrap.innerHTML = `<div class="empty"><div class="ico">🔍</div><p>ไม่พบข้อมูลที่ค้นหา</p></div>`;
+    return;
+  }
+
+  // group by section dividers
+  let html = '';
+  let lastCat = null;
+
+  items.forEach(d => {
+    if(activeCat === 'all' && d.cat !== lastCat){
+      const labels = {
+        'หมวด ๑': 'หมวด ๑ — บทฃทั่วไป',
+        'หมวด ๒': 'หมวด ๒ — การพิจารณาคำร้องขอความเป็นธรรม',
+        'บทเฉพาะกาล': 'บทเฉพาะกาล',
+        'ประกาศ': 'ประกาศและแบบ',
+      };
+      html += `<div class="sect-divider">${labels[d.cat]||d.cat}</div>`;
+      lastCat = d.cat;
+    }
+
+    const hasNote = !!notes[d.id];
+    const hasEdit = !!edits[d.id];
+    const preview = d.text[0]?.t.slice(0, 80) + (d.text[0]?.t.length > 80 ? '…' : '');
+
+    html += `<div class="section-card ${hasNote?'has-note':''} ${hasEdit?'has-edit':''}"
+      onclick="openSheet('${d.id}')">
+      <div class="card-top">
+        <div class="card-num">${d.label}</div>
+        <div class="card-body">
+          <div class="card-title">${hl(d.title, q)}</div>
+          <div class="card-preview">${hl(preview, q)}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+
+  wrap.innerHTML = html;
+}
+
+// ═══════════════════════════════════════════════════
+// BOTTOM SHEET
+// ═══════════════════════════════════════════════════
+function openSheet(id){
+  curItem = D.find(d => d.id === id);
+  if(!curItem) return;
+  curTab = 'view';
+  document.getElementById('sh-num').textContent = curItem.label;
+  document.getElementById('sh-title').textContent = curItem.title;
+  document.querySelectorAll('.sh-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'view'));
+  renderSheetBody();
+  document.getElementById('sheet-overlay').classList.add('open');
+  document.getElementById('sheet').classList.add('open');
+}
+
+function closeSheet(){
+  document.getElementById('sheet-overlay').classList.remove('open');
+  document.getElementById('sheet').classList.remove('open');
+  curItem = null;
+}
+
+function renderSheetBody(){
+  const body = document.getElementById('sheet-body');
+  if(!curItem){ body.innerHTML=''; return; }
+  const d = curItem;
+  const textBlocks = edits[d.id] ? [{type:'intro', t:edits[d.id]}] : d.text;
+
+  if(curTab === 'view'){
+    body.innerHTML = `
+      <div class="info-box">
+        <strong>${d.label}</strong> — ${d.title}
+        <br><span style="font-size:11px;opacity:.7;">${d.cat}</span>
+      </div>
+      ${renderText(textBlocks, searchQ)}
+    `;
+  } else if(curTab === 'note'){
+    const note = notes[d.id]||'';
+    body.innerHTML = `
+      <p style="font-size:12px;color:var(--tx3);margin-bottom:8px;">บันทึกส่วนตัวสำหรับ ${d.label}</p>
+      <textarea id="note-area" placeholder="พิมพ์โน้ตที่นี่…">${note}</textarea>
+      <div class="note-actions">
+        <button class="btn btn-accent" onclick="saveNote()">บันทึก</button>
+        <button class="btn btn-danger" onclick="clearNote()">ลบโน้ต</button>
+      </div>
+    `;
+  } else if(curTab === 'edit'){
+    const editTxt = edits[d.id] || d.text.map(b=>b.t).join('\n\n');
+    body.innerHTML = `
+      <p style="font-size:12px;color:var(--tx3);margin-bottom:8px;">แก้ไขเนื้อหา ${d.label} (บันทึกเฉพาะในเครื่อง)</p>
+      <textarea id="edit-area">${editTxt}</textarea>
+      <div class="note-actions">
+        <button class="btn btn-accent" onclick="saveEdit()">บันทึก</button>
+        <button class="btn btn-ghost" onclick="resetEdit()">รีเซ็ต</button>
+      </div>
+    `;
+  } else if(curTab === 'copy'){
+    const txt = `${d.label} — ${d.title}\n\n` + d.text.map(b=>b.t).join('\n\n');
+    body.innerHTML = `
+      <p style="font-size:12px;color:var(--tx3);margin-bottom:10px;">คัดลอกข้อความ</p>
+      <button class="btn btn-accent" style="width:100%;margin-bottom:10px;" onclick="copyText()">📋 คัดลอก</button>
+      <div style="background:var(--bg2);border-radius:8px;padding:12px;font-size:12px;line-height:1.8;color:var(--tx2);white-space:pre-wrap;">${txt}</div>
+    `;
+  }
+}
+
+function saveNote(){
+  if(!curItem) return;
+  const v = document.getElementById('note-area').value.trim();
+  if(v) notes[curItem.id] = v; else delete notes[curItem.id];
+  localStorage.setItem(LS+'_notes', JSON.stringify(notes));
+  showToast('บันทึกโน้ตแล้ว');
+  renderCards();
+}
+function clearNote(){
+  if(!curItem) return;
+  delete notes[curItem.id];
+  localStorage.setItem(LS+'_notes', JSON.stringify(notes));
+  document.getElementById('note-area').value = '';
+  showToast('ลบโน้ตแล้ว');
+  renderCards();
+}
+function saveEdit(){
+  if(!curItem) return;
+  const v = document.getElementById('edit-area').value.trim();
+  if(v && v !== curItem.text.map(b=>b.t).join('\n\n')) edits[curItem.id] = v;
+  else delete edits[curItem.id];
+  localStorage.setItem(LS+'_edits', JSON.stringify(edits));
+  showToast('บันทึกการแก้ไขแล้ว');
+  renderCards();
+}
+function resetEdit(){
+  if(!curItem) return;
+  delete edits[curItem.id];
+  localStorage.setItem(LS+'_edits', JSON.stringify(edits));
+  showToast('รีเซ็ตแล้ว');
+  renderSheetBody();
+  renderCards();
+}
+function copyText(){
+  if(!curItem) return;
+  const txt = `${curItem.label} — ${curItem.title}\n\n` + curItem.text.map(b=>b.t).join('\n\n');
+  navigator.clipboard.writeText(txt).then(()=>showToast('คัดลอกแล้ว')).catch(()=>showToast('ไม่สามารถคัดลอกได้'));
+}
+
+// ═══════════════════════════════════════════════════
+// TOAST
+// ═══════════════════════════════════════════════════
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 2000);
+}
+
+// ═══════════════════════════════════════════════════
+// EXPORT / IMPORT
+// ═══════════════════════════════════════════════════
+document.getElementById('export-btn').addEventListener('click', ()=>{
+  const data = {app:'reg_fairness_2567', notes, edits, ts: Date.now()};
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `reg_fairness_backup_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();
+});
+document.getElementById('import-file').addEventListener('change', e=>{
+  const f = e.target.files[0];
+  if(!f) return;
+  const r = new FileReader();
+  r.onload = ev=>{
+    try{
+      const d = JSON.parse(ev.target.result);
+      if(d.notes) notes = d.notes;
+      if(d.edits) edits = d.edits;
+      localStorage.setItem(LS+'_notes', JSON.stringify(notes));
+      localStorage.setItem(LS+'_edits', JSON.stringify(edits));
+      showToast('นำเข้าข้อมูลสำเร็จ');
+      renderCards();
+    }catch{showToast('ไฟล์ไม่ถูกต้อง');}
+  };
+  r.readAsText(f);
+  e.target.value='';
+});
+
+// ═══════════════════════════════════════════════════
+// EVENTS
+// ═══════════════════════════════════════════════════
+// Search
+const searchInp = document.getElementById('search-inp');
+const searchClear = document.getElementById('search-clear');
+searchInp.addEventListener('input', e=>{
+  searchQ = e.target.value;
+  searchClear.style.display = searchQ ? 'block' : 'none';
+  renderCards();
+});
+searchClear.addEventListener('click', ()=>{
+  searchInp.value = ''; searchQ = '';
+  searchClear.style.display = 'none';
+  renderCards();
+});
+
+// Tabs
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    activeCat = btn.dataset.cat;
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderCards();
+  });
+});
+
+// Sheet tabs
+document.querySelectorAll('.sh-tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    curTab = btn.dataset.tab;
+    document.querySelectorAll('.sh-tab').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    renderSheetBody();
+  });
+});
+
+// Sheet close
+document.getElementById('sheet-close').addEventListener('click', closeSheet);
+document.getElementById('sheet-overlay').addEventListener('click', closeSheet);
+
+// Theme toggle
+const themeBtn = document.getElementById('theme-btn');
+let darkMode = localStorage.getItem(LS+'_theme') !== 'light';
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  document.getElementById('meta-theme').content = darkMode ? '#060a12' : '#f4f6fa';
+  themeBtn.textContent = darkMode ? '🌙' : '☀️';
+}
+applyTheme();
+themeBtn.addEventListener('click', ()=>{
+  darkMode = !darkMode;
+  localStorage.setItem(LS+'_theme', darkMode ? 'dark' : 'light');
+  applyTheme();
+});
+
+// FAB
+const main = document.getElementById('main');
+const fab = document.getElementById('fab');
+main.addEventListener('scroll', ()=>{
+  fab.classList.toggle('vis', main.scrollTop > 200);
+});
+fab.addEventListener('click', ()=>main.scrollTo({top:0,behavior:'smooth'}));
+
+// PWA install
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e=>{
+  e.preventDefault();
+  deferredPrompt = e;
+  if(!localStorage.getItem(LS+'_no_install')){
+    document.getElementById('install-banner').classList.add('show');
+  }
+});
+document.getElementById('install-btn')?.addEventListener('click', ()=>{
+  deferredPrompt?.prompt();
+  deferredPrompt?.userChoice.then(()=>{ deferredPrompt=null; });
+  document.getElementById('install-banner').classList.remove('show');
+});
+document.getElementById('dismiss-btn')?.addEventListener('click', ()=>{
+  document.getElementById('install-banner').classList.remove('show');
+  localStorage.setItem(LS+'_no_install','1');
+});
+
+// Service Worker
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js').catch(()=>{});
+}
+
+// Initial render
+renderCards();
+</script>
+</body>
+</html>
